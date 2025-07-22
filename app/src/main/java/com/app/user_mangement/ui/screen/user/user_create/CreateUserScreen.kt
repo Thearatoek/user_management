@@ -1,5 +1,6 @@
 package org.example.user.management.sample.ui.screen.user.user_detail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -39,6 +41,7 @@ fun CreateUserScreen(
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
@@ -60,12 +63,17 @@ fun CreateUserScreen(
         },
         containerColor = Color(0xFFF5F5F5)
     ) { paddingValues ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .clickable {
+                    focusManager.clearFocus()
+                }
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
+
         ) {
             OutlinedTextField(
                 value = name,
