@@ -6,12 +6,12 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
+        google() // ✅ Firebase artifacts are hosted here
         mavenCentral()
     }
 }
+
 
 rootProject.name = "kla kmoum"
 include(":app")

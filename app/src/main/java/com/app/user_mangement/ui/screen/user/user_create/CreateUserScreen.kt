@@ -1,25 +1,34 @@
 package org.example.user.management.sample.ui.screen.user.user_detail
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.TabRowDefaults.Indicator
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -28,10 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import org.example.user.management.sample.data.model.UserModel
 import org.example.user.management.sample.ui.screen.user.user_list.UserViewModel
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-
 @Composable
 fun CreateUserScreen(
     viewModel: UserViewModel = androidx.hilt.navigation.compose.hiltViewModel(),
@@ -44,6 +49,10 @@ fun CreateUserScreen(
     val focusManager = LocalFocusManager.current
 
     Scaffold(
+        modifier = Modifier.clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = null
+        ) {  },
         topBar = {
             TopAppBar(
                 modifier = Modifier.fillMaxWidth(),
@@ -87,7 +96,6 @@ fun CreateUserScreen(
                 label = { Text("Phone") },
                 modifier = Modifier.fillMaxWidth()
             )
-
             OutlinedTextField(
                 value = age,
                 onValueChange = { age = it },
@@ -95,7 +103,6 @@ fun CreateUserScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
             )
-
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -107,14 +114,7 @@ fun CreateUserScreen(
             Button(
                 onClick = {
                     if (name.isNotBlank() && email.isNotBlank() && phone.isNotBlank() && age.toIntOrNull() != null) {
-                        viewModel.addUser(
-                            UserModel(
-                                name = name,
-                                email = email,
-                                phone = phone,
-                                age = age.toInt()
-                            )
-                        )
+
                         // wait 2sec to navigate back
                         navController.navigateUp()
 
@@ -128,3 +128,5 @@ fun CreateUserScreen(
         }
     }
 }
+
+

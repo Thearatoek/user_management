@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">USER APP</string>
+    <string name="app_name" translatable="false">USER APP</string>
+    <string name="cup" translatable="false">cup of tea</string>
+    <string name="hello_world" translatable="false">Hello World</string>
+    <string name="change_language" translatable="false">Change Language</string>
+    <string name="welcome_back" translatable="false">Welcome Back</string>
+    <string name="sign_to_acc" translatable="false">Sign in your account</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="forgot_password" translatable="false">Forgot password?</string>
+    <string name="sign_up" translatable="false">Sign Up</string>
+    <string name="login" translatable="false">Login</string>
+    <string name="logout" translatable="false">Logout</string>
+    <string name="dont_have_account" translatable="false">Do not have account?</string>
+    <string name="sign_in_with_google" translatable="false">Sign in with Google</string>
+    <string name="or" translatable="false">Or</string>
+    <string name="sign_in_with_apple" translatable="false">Sign in with Apple</string>
+    <string name="create_account" translatable="false">Create account and choose favorite</string>
+    <string name="username" translatable="false">Username</string>
+    <string name="have_acccount_yet" translatable="false">Have account?</string>
+    <string name="by_click_register" translatable="false">By clicking Register, you agree to out</string>
+    <string name="term_and_condition" translatable="false">Term and data policy</string>
+    <string name="setting" translatable="false">Setting</string>
+    <string name="dark_mode" translatable="false">Dark Mode</string>
+    <string name="light_mode" translatable="false">Light Mode</string>
+    <string name="english" translatable="false">English</string>
+    <string name="khmer" translatable="false">Khmer</string>
+
 </resources>

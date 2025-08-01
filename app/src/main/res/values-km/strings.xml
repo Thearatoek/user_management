@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">កម្មវិធីរបស់ខ្ញុំ</string>
-    <string name="hello_world">សួស្តី​ពិភពលោក</string>
-    <string name="change_language">ផ្លាស់ប្តូរភាសា</string>
-    <string name="cup">cup of tea</string>
+    <string name="hello_world" translatable="false">Hello World</string>
+    <string name="change_language" translatable="false">ផ្លាស់ប្តូរភាសា</string>
+    <string name="welcome_back" translatable="false">ស្វាគមន៍ការត្រឡប់មកវិញ</string>
+    <string name="sign_to_acc" translatable="false">ចូលគណនីរបស់អ្នក</string>
+    <string name="email" translatable="false">អ៉ីម៉េល</string>
+    <string name="password" translatable="false">លេខកូដសំងាត់</string>
+    <string name="forgot_password" translatable="false">ភ្លេចលេខកូដមែនទេ?</string>
+    <string name="sign_up" translatable="false">ចុះឈ្មោះ</string>
+    <string name="login" translatable="false">ចូល</string>
+    <string name="logout" translatable="false">ចាកចេញ</string>
+    <string name="dont_have_account" translatable="false">តើអ្នកមានគណនីហើយឬនៅ?</string>
+    <string name="sign_in_with_google" translatable="false">ចូលតាម Google</string>
+    <string name="or" translatable="false">Or</string>
+    <string name="sign_in_with_apple" translatable="false">ចូលតាម Apple</string>
+    <string name="create_account" translatable="false">បង្កើតគណនី ហើយនិង ជ្រើសរើសចំណងចំណូលចិត្ត</string>
+    <string name="username" translatable="false">ឈ្មោះអ្នកប្រើប្រាស់</string>
+    <string name="have_acccount_yet" translatable="false">មានគណនី?</string>
+    <string name="by_click_register" translatable="false">ដោយចុចចុះឈ្មោះ អ្នកយល់ព្រមចេញ</string>
+    <string name="term_and_condition" translatable="false">លក្ខខណ្ឌ និងគោលនយោបាយទិន្នន័យ</string>
+    <string name="setting" translatable="false">ការកំណត់</string>
+    <string name="dark_mode" translatable="false">ងងឹត</string>
+    <string name="light_mode" translatable="false">ភ្លឺe</string>
+    <string name="english" translatable="false">ភាសាអង្លេស</string>
+    <string name="khmer" translatable="false">ភាសាខ្មែរ</string>
+
 </resources>

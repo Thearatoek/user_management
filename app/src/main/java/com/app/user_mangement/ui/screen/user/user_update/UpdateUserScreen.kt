@@ -2,6 +2,7 @@ package com.app.klakmoum.ui.screen.user.user_update
 
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -44,29 +46,16 @@ fun UpdateUserScreen(
     navController: NavController
 ) {
     // Collect user from Flow/StateFlow exposed by ViewModel
-    val userState: UserModel? by viewModel.getUserById(userId).collectAsState(initial = null)
-    val user = userState // Store in a local variable to avoid smart cast issues
 
-    if (user == null) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("User not found", color = Color.Red)
-        }
-        return
-    }
-
-    // Remember and save input states, reset on user change
-    var name by rememberSaveable { mutableStateOf(user.name) }
-    var email by rememberSaveable { mutableStateOf(user.email) }
-    var phone by rememberSaveable { mutableStateOf(user.phone) }
-    var age by rememberSaveable { mutableStateOf(user.age.toString()) }
     val focusManager = LocalFocusManager.current
     Scaffold(
         modifier = Modifier.fillMaxSize()
-            .clickable {
-            focusManager.clearFocus()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) {
+
+                focusManager.clearFocus()
             },
         topBar = {
             TopAppBar(
@@ -81,6 +70,7 @@ fun UpdateUserScreen(
         },
         containerColor = Color(0xFFF5F5F5)
     ) { padding ->
+
         Column(
             modifier = Modifier
                 .padding(padding)
@@ -88,49 +78,23 @@ fun UpdateUserScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            UserInputField(value = name, label = "Name") { name = it }
-            UserInputField(value = email, label = "Email") { email = it }
-            UserInputField(value = phone, label = "Phone") { phone = it }
-            UserInputField(
-                value = age,
-                label = "Age",
-                keyboardType = KeyboardType.Number
-            ) { age = it }
 
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(
-                onClick = {
-                    val updatedUser = user.copy(
-                        name = name,
-                        email = email,
-                        phone = phone,
-                        age = age.toIntOrNull() ?: user.age
-                    )
-                    viewModel.updateUser(updatedUser)
-                    navController.navigateUp()
-                },
-                modifier = Modifier.fillMaxWidth()
-
-            ) {
-                Text("Update")
-            }
         }
     }
-}
 
-@Composable
-fun UserInputField(
-    value: String,
-    label: String,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    onValueChange: (String) -> Unit
-) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-        modifier = Modifier.fillMaxWidth()
-    )
+    @Composable
+    fun UserInputField(
+        value: String,
+        label: String,
+        keyboardType: KeyboardType = KeyboardType.Text,
+        onValueChange: (String) -> Unit
+    ) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            label = { Text(label) },
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }

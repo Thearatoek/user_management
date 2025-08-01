@@ -1,10 +1,8 @@
-package com.app.user_mangement.core
+package com.app.user_mangement.data.datasource.local.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import com.app.user_mangement.data.datasource.local.datastore.dataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
