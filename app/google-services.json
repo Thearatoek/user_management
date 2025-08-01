@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "456393288515",
+    "project_id": "jackpack-compose",
+    "storage_bucket": "jackpack-compose.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456393288515:android:8d53809de194715380ddf6",
+        "android_client_info": {
+          "package_name": "com.app.klakmoum"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFvUuNPcHKoOZYQWKGtSiqlEaDyqNLq_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
