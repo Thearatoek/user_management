@@ -35,7 +35,7 @@ fun LoginButton(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .background( MaterialTheme.colorScheme.onPrimaryContainer, shape = RoundedCornerShape(16.dp))
+            .background( MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(16.dp))
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
@@ -47,13 +47,13 @@ fun LoginButton(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = text,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.background,
                 style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium)
             )
             if (state is LoginUiState.Loading) {
                 Spacer(Modifier.width(10.dp))
                 CircularProgressIndicator(
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.background,
                     modifier = Modifier.size(20.dp),
                     strokeWidth = 2.dp
                 )
@@ -71,11 +71,18 @@ fun SignUpPrompt(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        Text(text)
+        Text(text, style = TextStyle(
+            fontSize = 16.sp,
+            color = Color.Black,
+            fontWeight = FontWeight.Normal
+        ))
         Text(
             text = subText,
-            color =  MaterialTheme.colorScheme.onPrimaryContainer,
-            fontWeight = FontWeight.Bold,
+            style = TextStyle(
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
+            ),
             modifier = Modifier.clickable {
                onClick()
             }
@@ -94,7 +101,7 @@ fun DividerWithText(text: String) {
         Text(
             text = text,
             modifier = Modifier.padding(horizontal = 10.dp),
-            color =  MaterialTheme.colorScheme.onPrimaryContainer,
+            color =  Color.Black,
             style = TextStyle(fontWeight = FontWeight.SemiBold)
         )
         Box(modifier = Modifier.weight(1f).height(1.dp).background( MaterialTheme.colorScheme.onPrimaryContainer))
@@ -128,7 +135,7 @@ fun SocialLoginButton(
             Spacer(Modifier.width(8.dp))
             Text(
                 text = text,
-                style = TextStyle(fontSize = 16.sp)
+                style = TextStyle(fontSize = 16.sp, color = Color.Black, fontWeight = FontWeight.Normal)
             )
         }
     }

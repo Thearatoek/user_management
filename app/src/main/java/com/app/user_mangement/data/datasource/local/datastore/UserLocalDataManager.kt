@@ -4,23 +4,22 @@ import android.content.Context
 import android.media.MediaFormat
 
 
-class UserLocalDataManager {
+class UserLocalDataManager(context: Context) {
     // save user key via sharePreferences
     companion object {
-        private const val KEY_LANGUAGE = "user_token"
+        private const val USER_KEY = "user_token"
     }
+    val prefs = context.getSharedPreferences("UserKey", Context.MODE_PRIVATE)
+
     fun saveUserTokenKey(context: Context, userToken: String) {
-        val prefs = context.getSharedPreferences(MediaFormat.KEY_LANGUAGE, Context.MODE_PRIVATE)
-        prefs.edit().putString(KEY_LANGUAGE, userToken).apply()
+        prefs.edit().putString(USER_KEY, userToken).apply()
     }
 
     fun getUserTokenKey(context: Context): String {
-        val prefs = context.getSharedPreferences(MediaFormat.KEY_LANGUAGE, Context.MODE_PRIVATE)
-        return prefs.getString(KEY_LANGUAGE, "en") ?: "en"
+        return prefs.getString(USER_KEY, "") ?: ""
     }
 
     fun clearUserTokenKey(context: Context) {
-        val prefs = context.getSharedPreferences(MediaFormat.KEY_LANGUAGE, Context.MODE_PRIVATE)
-        prefs.edit().remove(KEY_LANGUAGE).apply()
+        prefs.edit().remove(USER_KEY).apply()
     }
 }

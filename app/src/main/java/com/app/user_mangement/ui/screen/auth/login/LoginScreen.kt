@@ -46,8 +46,8 @@ fun LoginScreen(
 
     LaunchedEffect(state) {
         systemUiController.setSystemBarsColor(
-            color = Color(0xff317a59),
-            darkIcons =false
+            color = Color.White,
+            darkIcons =true
         )
         if (state is LoginUiState.Success) {
             navController.navigate("dashboard") {

@@ -141,7 +141,7 @@ fun RegisterScreen(
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
                     modifier = Modifier.padding(horizontal = 10.dp),
-                    text = stringResource(id =R.string.forgot_password), color = MaterialTheme.colorScheme.primary, style = TextStyle(
+                    text = stringResource(id =R.string.forgot_password), color = Color.Black, style = TextStyle(
                         fontSize = 18.sp, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight(600)
                     )
                 )
@@ -182,7 +182,7 @@ fun RegisterScreen(
                         )
                         Text(
                             modifier = Modifier.padding(horizontal = 10.dp),
-                            text = stringResource(id =R.string.term_and_condition), color = MaterialTheme.colorScheme.secondaryContainer, style = TextStyle(
+                            text = stringResource(id =R.string.term_and_condition), color = Color.Black, style = TextStyle(
                                 fontSize = 18.sp, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight(600)
                             )
                         )

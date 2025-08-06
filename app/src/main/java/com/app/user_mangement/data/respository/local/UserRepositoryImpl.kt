@@ -63,9 +63,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun logout():Boolean {
         try {
             auth.signOut()
-            userLocalDataManager.clearUserTokenKey(context)
-            userLocalDataManager.clearUserTokenKey(context)
-            // update state
+            userLocalDataManager.clearUserTokenKey(context)         // update state
         } catch (e: Exception) {
             //
         }
@@ -97,6 +95,5 @@ class UserRepositoryImpl @Inject constructor(
             Result.failure(e)
         }
     }
-
 
 }

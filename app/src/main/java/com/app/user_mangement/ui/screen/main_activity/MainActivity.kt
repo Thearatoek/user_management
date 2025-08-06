@@ -4,17 +4,15 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.user_mangement.core.AppLanguageManager
+import com.app.user_mangement.core.NetworkMonitor
+import com.app.user_mangement.core.app_root.NetworkStatusObserver
 import com.app.user_mangement.data.datasource.local.datastore.SettingsManager
 import com.app.user_mangement.navigation.AppNavGraph
-import com.app.user_mangement.ui.screen.user.user_list.ThemeModeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.example.user.management.sample.ui.theme.MyAppTheme
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -25,14 +23,23 @@ class MainActivity : ComponentActivity() {
         val newContext = AppLanguageManager.applyLanguage(base, langCode)
         super.attachBaseContext(newContext)
     }
+    @Inject
+    lateinit var networkMonitor: NetworkMonitor
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        networkMonitor.registerCallback()
         setContent {
-            val themeViewModel: ThemeModeViewModel = hiltViewModel()
-            val themeMode by themeViewModel.themeMode.collectAsState()
-            MyAppTheme(themeMode = themeMode) {
+            setContent {
                 AppNavGraph()
+                NetworkStatusObserver(networkMonitor)
             }
         }
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        networkMonitor.unregisterCallback()
+    }
 }
+

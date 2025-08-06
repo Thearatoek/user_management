@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import org.example.user.management.sample.data.model.LoginUiState
 import org.example.user.management.sample.data.model.UserModel
@@ -26,6 +27,8 @@ class LoginViewModel @Inject constructor(
            userRepository.checkUserLogin()
        }
     }
+    private val _listingPage = MutableStateFlow<List<String>>(emptyList())
+    val listingPage : StateFlow<List<String>> = _listingPage.asStateFlow()
     private val _loginState = MutableStateFlow<LoginUiState>(LoginUiState.Idle)
     val loginState: StateFlow<LoginUiState> = _loginState
     fun  loginWithEmailAndPassword(email : String , password: String){
@@ -37,6 +40,7 @@ class LoginViewModel @Inject constructor(
            }
                .onFailure { e->
                    _loginState.value = LoginUiState.Error(message = e.message.toString())
+
                }
         }
     }

@@ -32,7 +32,9 @@ object DataBaseModule {
 
     @Singleton
     @Provides
-    fun provideUserLocalDataManager(): UserLocalDataManager {
-        return UserLocalDataManager()
+    fun provideUserLocalDataManager(
+        @ApplicationContext context: Context
+    ): UserLocalDataManager {
+        return UserLocalDataManager(context = context)
     }
 }

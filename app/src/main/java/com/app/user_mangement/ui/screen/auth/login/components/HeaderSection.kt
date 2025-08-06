@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -25,7 +26,7 @@ fun HeaderSection(
             style = TextStyle(
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold ,
-                color = MaterialTheme.colorScheme.onBackground)
+                color = Color.Black)
         )
         Spacer(Modifier.height(8.dp))
         Text(
@@ -34,7 +35,7 @@ fun HeaderSection(
             style = TextStyle(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Light,
-                color = MaterialTheme.colorScheme.onBackground)
+                color = Color.Black)
         )
     }
 }
