@@ -43,7 +43,9 @@ The project uses the following dependencies:
 
 Please ensure that your Android Studio environment is set up correctly with the required dependencies and Android SDK versions to run the app.
 
-## video
+## Authentication screen
+
+[![Screenshot-2025-08-16-at-1-26-22-in-the-afternoon.png](https://i.postimg.cc/nrPKDqHc/Screenshot-2025-08-16-at-1-26-22-in-the-afternoon.png)](https://postimg.cc/D41bVJJt)
 
 
 
