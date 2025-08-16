@@ -62,11 +62,23 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="backgroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="69" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundClipArt">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+                                                <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="/private/var/folders/wc/49bxyz2n74156vfskrj490z40000gn/T/ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
@@ -79,8 +91,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Downloads/admin.png" />
-                                                <entry key="scalingPercent" value="51" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/logo.png" />
+                                                <entry key="scalingPercent" value="44" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -108,6 +120,12 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="0c9359" />
                                     </map>
                                   </option>
                                 </PersistentState>

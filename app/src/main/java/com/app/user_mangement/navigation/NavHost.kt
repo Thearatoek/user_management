@@ -1,62 +1,51 @@
 package com.app.user_mangement.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.app.klakmoum.navigation.NavDirections
-import com.app.klakmoum.presentation.home.UserScreen
-import com.app.klakmoum.ui.screen.user.user_update.UpdateUserScreen
-import com.app.user_mangement.ui.screen.auth.login.LoginScreen
-import com.app.user_mangement.ui.screen.auth.login.LoginViewModel
-import com.app.user_mangement.ui.screen.auth.register.RegisterScreen
+import com.app.user_mangement.ui.screen.auth.login.PersonalizeScreen
+import com.app.user_mangement.ui.screen.auth.login.RegisterScreen
+import com.app.user_mangement.ui.screen.auth.login.SetupScreen
+import com.app.user_mangement.ui.screen.auth.register.LoginScreen
+import com.app.user_mangement.ui.screen.books.BookScreen
+import com.app.user_mangement.ui.screen.dashboard.DashboardScreen
 import com.app.user_mangement.ui.screen.qr_scan.QRScannerScreen
-import com.app.user_mangement.ui.screen.splash_screen.SplashScreen
-import com.app.user_mangement.ui.screen.user.user_list.LanguageViewModel
-import com.app.user_mangement.ui.screen.user.user_list.ThemeModeViewModel
+import com.app.user_mangement.ui.screen.welcome.WelcomeScreen
 import org.example.user.management.sample.ui.screen.user.user_detail.CreateUserScreen
-import org.example.user.management.sample.ui.screen.user.user_list.UserViewModel
 
 
 @Composable
 fun AppNavGraph(
-    userViewModel: UserViewModel = hiltViewModel(), // or your own ViewModel
-    loginViewModel: LoginViewModel = hiltViewModel(),
-    languageViewModel: LanguageViewModel= hiltViewModel(),
-    themeViewModel: ThemeModeViewModel = hiltViewModel(),
+    startDestination: String,
     navController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navController,
-        startDestination = NavDirections.SplashScreen.route
+        startDestination = startDestination
     ) {
-        userScreen(navController, themeViewModel)
+        userScreen(navController)
         createUserScreen(navController)
-        updateUserScreen(navController, userViewModel)
         scanQRScreen()
-        splashScreen(navController, loginViewModel)
         loginScreen(navController)
         registerScreen(navController)
+        bookListingScreen(navController)
+        welcomeScreen(navController)
+        appUserFunctionalityScreen(navController)
+        createUsername(navController)
     }
 }
 
-private fun NavGraphBuilder.userScreen(navController: NavHostController,  themeModeViewModel: ThemeModeViewModel) {
+private fun NavGraphBuilder.userScreen(navController: NavHostController) {
     composable(NavDirections.Dashboard.route) {
-        UserScreen(
-            viewModel = hiltViewModel(),
-            navController = navController,
-            themeModeViewModel = themeModeViewModel,
-            languageViewModel = hiltViewModel(),
+        DashboardScreen(
+         navController
         )
     }
 }
-
-
 private fun NavGraphBuilder.createUserScreen(navController: NavHostController) {
     composable(NavDirections.CreateUserScreen.route) {
         CreateUserScreen(
@@ -65,25 +54,6 @@ private fun NavGraphBuilder.createUserScreen(navController: NavHostController) {
         )
     }
 }
-fun NavGraphBuilder.updateUserScreen(
-    navController: NavHostController,
-    userViewModel: UserViewModel
-) {
-    composable(
-        route = NavDirections.UpdateUserScreen.route,
-        arguments = listOf(navArgument("userId") { type = NavType.IntType })
-    ) { backStackEntry ->
-        val userId = backStackEntry.arguments?.getInt("userId") ?: -1
-        Log.d("Navigation", "Navigated to UpdateUserScreen with userId = $userId")
-
-        UpdateUserScreen(
-            userId = userId,
-            viewModel = userViewModel,
-            navController = navController
-        )
-    }
-}
-
 // Scan QR Code Screen
 private fun NavGraphBuilder.scanQRScreen() {
     composable(NavDirections.ScanQRScreen.route) {
@@ -91,18 +61,6 @@ private fun NavGraphBuilder.scanQRScreen() {
         }
     }
 }
-
-// Splash Screen
-private  fun NavGraphBuilder.splashScreen(navController: NavHostController,  userViewModel: LoginViewModel){
-
-    composable(NavDirections.SplashScreen.route){
-        SplashScreen(
-            navController,
-            userViewModel
-        )
-    }
-}
-
 private  fun  NavGraphBuilder.loginScreen(navController: NavHostController){
     composable(NavDirections.LoginScreen.route){
         LoginScreen(navController = navController )
@@ -111,5 +69,29 @@ private  fun  NavGraphBuilder.loginScreen(navController: NavHostController){
 private  fun  NavGraphBuilder.registerScreen(navController: NavHostController){
     composable(NavDirections.RegisterScreen.route){
         RegisterScreen(navController = navController )
+    }
+}
+
+private  fun  NavGraphBuilder.bookListingScreen(navController: NavHostController){
+    composable(NavDirections.BookListingScreen.route){
+        BookScreen(navController = navController )
+    }
+}
+
+private  fun NavGraphBuilder.welcomeScreen(navController: NavHostController) {
+    composable(NavDirections.WelcomeScreen.route) {
+       WelcomeScreen(navController = navController)
+    }
+}
+
+private  fun NavGraphBuilder.appUserFunctionalityScreen(navController: NavHostController) {
+    composable(NavDirections.AppUserFunctionalityScreen.route) {
+        SetupScreen(navController = navController)
+    }
+}
+
+private  fun NavGraphBuilder.createUsername(navController: NavHostController) {
+    composable(NavDirections.UserNameScreen.route) {
+        PersonalizeScreen(navController = navController)
     }
 }

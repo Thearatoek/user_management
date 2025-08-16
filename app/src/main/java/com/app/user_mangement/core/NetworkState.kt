@@ -1,7 +1,8 @@
 package com.app.user_mangement.core
 
-sealed class NetworkStatus {
-    object Available : NetworkStatus()
-    object Unavailable : NetworkStatus()
-    object Lost : NetworkStatus()
+enum class NetworkStatus {
+    Available,
+    Unavailable,
+    Losing,
+    Lost
 }

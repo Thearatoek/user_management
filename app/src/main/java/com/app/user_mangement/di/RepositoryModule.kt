@@ -1,7 +1,12 @@
 package org.example.user.management.sample.di
 
 import android.content.Context
-import com.app.user_mangement.data.datasource.local.datastore.UserLocalDataManager
+import com.app.user_mangement.data.datasource.local.datastore.UserManagerStore
+import com.app.user_mangement.data.datasource.remote.ApiInterface
+import com.app.user_mangement.data.respository.book_repos.BookRepositoryImpl
+import com.app.user_mangement.data.respository.book_repos.BookRepostory
+import com.app.user_mangement.data.respository.cart_repos.CartRepository
+import com.app.user_mangement.data.respository.cart_repos.CartsRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -34,7 +39,7 @@ object RepositoryModule {
     fun provideUserRepository(
         auth: FirebaseAuth,
         firestore: FirebaseFirestore,
-        userLocalDataManager: UserLocalDataManager,
+        userLocalDataManager: UserManagerStore,
         @ApplicationContext context: Context
     ): UserRepository {
         return UserRepositoryImpl(
@@ -42,5 +47,22 @@ object RepositoryModule {
             firestore,
             userLocalDataManager,
             context)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCartRepository(apiInterface: ApiInterface): CartRepository {
+        return CartsRepositoryImpl(
+            apiInterface = apiInterface
+        )
+    }
+
+    //register book repository
+    @Singleton
+    @Provides
+    fun provideBookRepository(apiInterface: ApiInterface): BookRepostory {
+        return BookRepositoryImpl(
+            apiInterface = apiInterface
+        )
     }
 }

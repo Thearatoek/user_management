@@ -6,42 +6,64 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
+import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class NetworkMonitor @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    private val _networkStatus = MutableStateFlow<NetworkStatus>(NetworkStatus.Unavailable)
+    private val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    private val _networkStatus = MutableStateFlow(NetworkStatus.Unavailable)
     val networkStatus: StateFlow<NetworkStatus> = _networkStatus.asStateFlow()
 
-    private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private var isRegistered = false
 
     private val callback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
-            _networkStatus.value = NetworkStatus.Available
+            _networkStatus.tryEmit(NetworkStatus.Available)
         }
 
         override fun onLost(network: Network) {
-            _networkStatus.value = NetworkStatus.Lost
+            _networkStatus.tryEmit(NetworkStatus.Lost)
         }
 
         override fun onUnavailable() {
-            _networkStatus.value = NetworkStatus.Unavailable
+            _networkStatus.tryEmit(NetworkStatus.Unavailable)
+        }
+
+        override fun onLosing(network: Network, maxMsToLive: Int) {
+            _networkStatus.tryEmit(NetworkStatus.Losing)
         }
     }
 
     fun registerCallback() {
+        if (isRegistered) return
         val request = NetworkRequest.Builder()
             .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
             .build()
-        connectivityManager.registerNetworkCallback(request, callback)
+        try {
+            connectivityManager.registerNetworkCallback(request, callback)
+            isRegistered = true
+        } catch (e: Exception) {
+            Log.e("NetworkMonitor", "Failed to register network callback", e)
+        }
     }
 
     fun unregisterCallback() {
-        connectivityManager.unregisterNetworkCallback(callback)
+        if (!isRegistered) return
+        try {
+            connectivityManager.unregisterNetworkCallback(callback)
+            isRegistered = false
+        } catch (e: Exception) {
+            Log.e("NetworkMonitor", "Failed to unregister network callback", e)
+        }
     }
 }

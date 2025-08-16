@@ -1,0 +1,47 @@
+package com.app.user_mangement.ui.widget
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+
+@Composable
+fun CustomButton(
+    text: String,
+    onClick: () -> Unit,
+    isRegister: Boolean
+) {
+    Box(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .height(52.dp)
+            .border(width = 1.dp, color = Color.White, shape = RoundedCornerShape(4.dp))
+            .background(Color(if (isRegister) 0xffFFFFFF else 0xff0EAD69), shape = RoundedCornerShape(4.dp)) // Use the appropriate color based on isRegister
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center // Center the text
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge.copy(
+                color = if (isRegister) Color(0xff0C9359) else Color.White, // Change text color based on isRegister
+                fontSize = 18.sp,
+                fontWeight = FontWeight(700)
+            ),
+        )
+    }
+}

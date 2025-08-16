@@ -1,10 +1,12 @@
 package org.example.user.management.sample.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.app.user_mangement.ui.theme.AppTypography
 
 
 private val LightColors = lightColorScheme(
@@ -39,7 +41,7 @@ fun MyAppTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        typography = Typography,
+        typography = AppTypography,
         shapes = Shapes,
         content = content
     )

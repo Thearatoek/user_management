@@ -108,4 +108,11 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.firestore.ktx)
 
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.retrofit.rxjava)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.otto)
+
 }

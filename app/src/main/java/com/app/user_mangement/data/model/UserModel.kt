@@ -35,3 +35,4 @@ sealed class LoginUiState {
 
     data class Error(val message: String) : LoginUiState()
 }
+

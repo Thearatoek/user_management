@@ -12,13 +12,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.outlined.ToggleOff
 import androidx.compose.material.icons.outlined.ToggleOn
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.rememberDrawerState // ✅ from material3
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.FloatingActionButton
@@ -49,12 +56,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.app.klakmoum.R
 import com.app.user_mangement.core.NetworkMonitor
 import com.app.user_mangement.core.NetworkStatus
+import com.app.user_mangement.data.model.BookModel
+import com.app.user_mangement.data.model.CartResponse
+import com.app.user_mangement.data.model.OrderResponse
+import com.app.user_mangement.data.model.Product
+import com.app.user_mangement.data.model.UiState
 import com.app.user_mangement.ui.screen.auth.login.LoginViewModel
 import com.app.user_mangement.ui.screen.auth.login.components.LoginButton
+import com.app.user_mangement.ui.screen.books.BookViewModel
+import com.app.user_mangement.ui.screen.carts.CartsViewModel
 import com.app.user_mangement.ui.screen.user.user_list.LanguageViewModel
 import com.app.user_mangement.ui.screen.user.user_list.ThemeModeViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -66,12 +82,17 @@ fun UserScreen(
     viewModel: LoginViewModel = hiltViewModel(),
     languageViewModel: LanguageViewModel = hiltViewModel(),
     themeModeViewModel: ThemeModeViewModel = hiltViewModel(),
+    bookviewModel : BookViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
     val systemUiController = rememberSystemUiController()
     val state by viewModel.loginState.collectAsState()
+
+    // book ui state
+    val bookState by bookviewModel.bookListing.collectAsState()
     val themeCode = themeModeViewModel.themeMode.collectAsState()
-    val isConnected = remember { mutableStateOf(true) } // Replace with actual network check if needed
+    val isConnected =
+        remember { mutableStateOf(true) } // Replace with actual network check if needed
     SideEffect {
         systemUiController.setSystemBarsColor(
             color = if (themeCode.value == "light") Color.White else Color(0xff0C0C27),
@@ -89,7 +110,7 @@ fun UserScreen(
         drawerContent = {
             ModalDrawerSheet(
                 drawerContainerColor = MaterialTheme.colorScheme.background,
-            ){
+            ) {
                 Column(
                     modifier = Modifier
                         .padding(16.dp),
@@ -105,9 +126,12 @@ fun UserScreen(
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
                     Spacer(modifier = Modifier.height(24.dp))
-                    ThemeSwitcherScreen(viewModel = themeModeViewModel, languageViewModel = languageViewModel)
-                    Spacer(modifier =Modifier.weight(1f))
-                    LoginButton(state, scope, stringResource(id =R.string.logout)) {
+//                    ThemeSwitcherScreen(
+//                        viewModel = themeModeViewModel,
+//                        languageViewModel = languageViewModel
+//                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    LoginButton(state, scope, stringResource(id = R.string.logout)) {
                         viewModel.logout()
                         scope.launch {
                             drawerState.close()
@@ -127,14 +151,19 @@ fun UserScreen(
                 TopAppBar(
                     backgroundColor = MaterialTheme.colorScheme.background,
                     elevation = 0.dp,
-                    title = { Text(text = stringResource(id = R.string.app_name),
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontFamily = FontFamily.SansSerif
-                        )
-                        ) },
+
+                    title = {
+                    },
+                    actions = {
+                        IconButton(onClick = {
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Notifications,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    },
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch {
@@ -159,128 +188,49 @@ fun UserScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
+                    .padding(16.dp)
                     .background(color = Color.White),
             ) {
                 // Content goes here
-            }
-        }
-    }
-}
-@Composable
-fun ThemeSwitcherScreen(
-    languageViewModel: LanguageViewModel = hiltViewModel(),
-    viewModel: ThemeModeViewModel = hiltViewModel()) {
-    val context = LocalContext.current
-    val themeMode by viewModel.themeMode.collectAsState()
-    val languageCode by languageViewModel.languageCode.collectAsState()
-    Column(modifier = Modifier.padding(16.dp)) {
-       Box(
-           modifier = Modifier
-               .fillMaxWidth()
-
-       ) {
-          // Switch button
-           Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                     .fillMaxWidth()
-
-           ) {
-             Icon(
-                 imageVector =if (themeMode == "light") Icons.Outlined.ToggleOff else Icons.Outlined.ToggleOn,
-                 contentDescription = "",
-                 tint = MaterialTheme.colorScheme.primary,
-                 modifier = Modifier
-                     .size(50.dp)
-                     .clickable {
-                         viewModel.changeThemeMode(
-                             if (themeMode == "light") "dark" else "light",
-                             context
-                         )
-                     }
-             )
-                Text(
-                    text = stringResource(
-                        id = if (themeMode == "light") R.string.light_mode else R.string.dark_mode
-                    ),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .weight(3f),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
+                Column {
+                    Text(
+                        text = stringResource(id = R.string.hello_world),
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Normal,
+                            fontFamily = FontFamily.Monospace,
+                            color = MaterialTheme.colorScheme.primary
+                        ),
+                        modifier = Modifier.padding(bottom = 16.dp)
                     )
-                )
-           }
-
-       }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            // Switch button
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Icon(
-                    imageVector =if (languageCode == "en") Icons.Outlined.ToggleOff else Icons.Outlined.ToggleOn,
-                    contentDescription = "",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clickable {
-                            languageViewModel.changeLanguage(
-                                if (languageViewModel.languageCode.value == "en") "km" else "en",
-                                context
+                    when (bookState) {
+                        is UiState.Loading -> {
+                            CircularProgressIndicator(
                             )
                         }
-                )
-                Text(
-                    text = stringResource(
-                        id = if (languageCode == "en") R.string.english else R.string.khmer
-                    ),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .weight(3f),
-                    style = TextStyle(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                )
+
+                        is UiState.Success -> {
+                            LazyColumn(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                items((bookState as UiState.Success<List<BookModel>>).data) { book ->
+
+                                }
+                            }
+                        }
+
+                        is UiState.Error -> {
+                            Text(
+                                text = (bookState as UiState.Error).message,
+                                style = MaterialTheme.typography.bodyLarge.copy(
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            )
+                        }
+                    }
+                }
             }
         }
     }
-}
-@Preview(showBackground = true)
-@Composable
-fun MyScreenPreview() {
-    MyScreen()
-}
-@Composable
-fun MyScreen() {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "My Screen") },
-                backgroundColor = MaterialTheme.colorScheme.primary
-            )
-        },
-        content = { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .background(color = MaterialTheme.colorScheme.background),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Hello, World!", style = MaterialTheme.typography.headlineMedium)
-            }
-        }
-    )
 }

@@ -72,4 +72,14 @@ class LoginViewModel @Inject constructor(
            }
        }
    }
+
+    // update user
+    fun updateUser(name : String) {
+        viewModelScope.launch {
+            _loginState.value = LoginUiState.Loading
+            userRepository.updateUser(name = name)
+            _loginState.value = LoginUiState.Success
+        }
+    }
+
 }

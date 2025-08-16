@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">USER APP</string>
+    <string name="app_name" translatable="false">AEPOD</string>
     <string name="cup" translatable="false">cup of tea</string>
     <string name="hello_world" translatable="false">Hello World</string>
     <string name="change_language" translatable="false">Change Language</string>
