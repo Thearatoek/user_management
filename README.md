@@ -1,4 +1,4 @@
-# Note App using Android, Jetpack Compose, Dagger Hilt, Room Database, Navigation, and MVVM
+#  App using Android, Jetpack Compose, Dagger Hilt, Room Database, Navigation, and MVVM
 
 ## Overview
 This is a  App built for Android using various modern technologies and architecture patterns. The app follows the Model-View-ViewModel (MVVM) architecture and incorporates Android Jetpack Compose for the user interface, Dagger Hilt for dependency injection, Navigation is handled using Android Navigation components.
