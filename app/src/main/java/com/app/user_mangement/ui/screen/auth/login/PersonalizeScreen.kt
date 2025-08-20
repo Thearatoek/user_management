@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -31,7 +32,6 @@ import androidx.navigation.NavController
 import com.app.klakmoum.R
 import com.app.user_mangement.ui.screen.auth.login.components.CustomTextField
 import com.app.user_mangement.ui.widget.CustomButton
-import org.example.user.management.sample.data.model.LoginUiState
 
 @Composable
 fun PersonalizeScreen(
@@ -40,6 +40,7 @@ fun PersonalizeScreen(
 ){
     var username by remember { mutableStateOf("") }
     val state by viewModel.loginState.collectAsState()
+    val focusManager = LocalFocusManager.current
     LaunchedEffect(state){
         if(state is LoginUiState.Success){
             navController.navigate(("login_screen"))
@@ -49,16 +50,17 @@ fun PersonalizeScreen(
         modifier = Modifier
             .background(Color.White)
             .clickable(
+
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }
-            ) { }
+            ) { focusManager.clearFocus() }
     ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    brush = Brush.radialGradient(
-                        colors = listOf(Color(0xff0C9359), Color(0xff0EAD69))
+                    brush = Brush.linearGradient(
+                        colors = listOf( Color(0xff0EAD69),Color(0xff0C9359),)
                     )
                 ),
         ){
@@ -100,10 +102,12 @@ fun PersonalizeScreen(
                     keyboardType = KeyboardType.Text
                 )
                 Spacer(modifier =Modifier.weight(1f))
-                CustomButton(text = "Continue",
+                CustomButton(
+                    text = "Continue",
                     onClick = {
                        viewModel.updateUser(name = username)
                 },
+                    isLoading = state,
                     isRegister =true )
                 Spacer(Modifier.height(25.dp))
             }

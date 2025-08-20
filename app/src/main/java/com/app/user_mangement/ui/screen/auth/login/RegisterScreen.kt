@@ -23,12 +23,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.klakmoum.R
-import com.app.klakmoum.navigation.NavDirections
 import com.app.user_mangement.ui.screen.auth.login.components.CustomTextField
 import com.app.user_mangement.ui.widget.CustomButton
 import com.app.user_mangement.ui.widget.CustomSocialButton
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import org.example.user.management.sample.data.model.LoginUiState
 
 @Composable
 fun RegisterScreen(
@@ -38,10 +36,8 @@ fun RegisterScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val state by viewModel.loginState.collectAsStateWithLifecycle()
-    val coroutineScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
     val systemUiController = rememberSystemUiController()
-
     LaunchedEffect(state) {
         systemUiController.setSystemBarsColor(
             color = Color.White,
@@ -65,8 +61,8 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    brush = Brush.radialGradient(
-                        colors = listOf(Color(0xff0C9359), Color(0xff0EAD69))
+                    brush = Brush.linearGradient(
+                        colors = listOf( Color(0xff0EAD69),Color(0xff0C9359),)
                     )
                 ),
         ){
@@ -97,7 +93,6 @@ fun RegisterScreen(
                     modifier = Modifier.padding(start = 16.dp) // spacing between logo and text
                 )
                 Spacer(Modifier.height(48.dp))
-
                 CustomTextField(
                     value = email,
                     onValueChange = { email = it },
@@ -108,7 +103,6 @@ fun RegisterScreen(
                     keyboardType = KeyboardType.Password
                 )
                 Spacer(Modifier.height(32.dp))
-
                 CustomTextField(
                     value = password,
                     onValueChange = { password = it },
@@ -118,7 +112,6 @@ fun RegisterScreen(
                     leadingIcon = R.drawable.key,
                     keyboardType = KeyboardType.Password
                 )
-
                 state.takeIf { it is LoginUiState.Error }?.let {
                     Spacer(Modifier.height(16.dp))
                     Text(
@@ -173,6 +166,7 @@ fun RegisterScreen(
                               username =""
                           )
                       },
+                      isLoading = state,
                       isRegister = true)
                   Spacer(modifier = Modifier.height(16.dp))
                   Text(

@@ -17,6 +17,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -26,8 +28,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.app.klakmoum.R
+import com.app.user_mangement.ui.screen.auth.login.LoginViewModel
 import com.app.user_mangement.ui.widget.CustomButton
 
 
@@ -35,7 +39,9 @@ import com.app.user_mangement.ui.widget.CustomButton
 @Composable
 fun WelcomeScreen(
     navController: NavController,
+    viewModel : LoginViewModel = hiltViewModel()
 ) {
+    val state by viewModel.loginState.collectAsState()
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
@@ -95,12 +101,14 @@ fun WelcomeScreen(
                 CustomButton(
                     isRegister = true,
                     text = "Register",
+                    isLoading = state,
                     onClick = { navController.navigate("register_screen") },
                 )
                 Spacer(modifier = Modifier.height(20.dp))
                 CustomButton(
                     isRegister = false,
                     text = "Login",
+                    isLoading = state,
                     onClick = {
                         navController.navigate("login_screen")
                     },

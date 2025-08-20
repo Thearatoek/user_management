@@ -6,7 +6,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-
 ): ViewModel(){
-
 }

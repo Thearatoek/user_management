@@ -28,12 +28,9 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,14 +44,14 @@ import androidx.navigation.NavHostController
 import com.app.klakmoum.R
 import com.app.user_mangement.data.model.BookModel
 import com.app.user_mangement.data.model.UiState
+import com.app.user_mangement.ui.screen.auth.login.LoginUiState
 import com.app.user_mangement.ui.screen.auth.login.LoginViewModel
 import com.app.user_mangement.ui.screen.auth.login.components.LoginButton
 import com.app.user_mangement.ui.screen.books.components.ThemeSwitcherScreen
-import com.app.user_mangement.ui.screen.user.user_list.LanguageViewModel
-import com.app.user_mangement.ui.screen.user.user_list.ThemeModeViewModel
+import com.app.user_mangement.ui.screen.dashboard.user.user_list.LanguageViewModel
+import com.app.user_mangement.ui.screen.dashboard.user.user_list.ThemeModeViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
-import org.example.user.management.sample.data.model.LoginUiState
 
 @Composable
 fun BookScreen(

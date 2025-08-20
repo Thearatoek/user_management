@@ -20,6 +20,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,14 +32,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.app.klakmoum.R
 import com.app.user_mangement.ui.widget.CustomButton
 
 @Composable
 fun SetupScreen(
-   navController: NavController
+   navController: NavController,
+   viewModel: LoginViewModel = hiltViewModel()
 ) {
+    val state by viewModel.loginState.collectAsState()
     Scaffold(
         modifier = Modifier
             .background(Color.White)
@@ -51,9 +56,7 @@ fun SetupScreen(
                 .fillMaxSize()
                 .background(
                     brush =  Brush.linearGradient(
-                        colors = listOf( Color(0xFF0C9359),Color(0xFF0EAD69),), // start to end colors
-                        start = Offset(0f, 0f),  // top-left
-                        end = Offset(0f, 0f) // bottom-right
+                        colors = listOf( Color(0xff0EAD69),Color(0xff0C9359),)
                     )
                 ),
         ){
@@ -134,7 +137,11 @@ fun SetupScreen(
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                CustomButton(text = "Continue", onClick = { /*TODO*/ }, isRegister =true )
+                CustomButton(
+                    text = "Continue",
+                    onClick = {},
+                    isLoading = state,
+                    isRegister =true )
                 Spacer(Modifier.height(25.dp))
             }
         }

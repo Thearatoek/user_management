@@ -25,5 +25,6 @@
     <string name="light_mode" translatable="false">Light Mode</string>
     <string name="english" translatable="false">English</string>
     <string name="khmer" translatable="false">Khmer</string>
-
+    <string name="light_status" translatable="false">Light Status</string>
+    <string name="go_to_setting" translatable="false">Go to Settings</string>
 </resources>

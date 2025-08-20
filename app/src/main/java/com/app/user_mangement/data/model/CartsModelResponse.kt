@@ -1,7 +1,5 @@
 package com.app.user_mangement.data.model
 
-import org.example.user.management.sample.data.model.LoginUiState
-
 data class CartResponse(
     val carts: List<OrderResponse>
 )

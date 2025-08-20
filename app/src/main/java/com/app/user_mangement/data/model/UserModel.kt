@@ -7,19 +7,19 @@ import com.google.gson.annotations.SerializedName
 data class UserModel(
     @PrimaryKey
     @SerializedName("id")
-    val id: String = "",
+    val id: String ?= "",
 
     @SerializedName("name")
-    val name: String = "",
+    val name: String? = "",
 
     @SerializedName("email")
-    val email: String, // ✅ Required
+    val email: String="", // ✅ Required
 
     @SerializedName("phone")
-    val phone: String = "",
+    val phone: String? = "",
 
     @SerializedName("password")
-    val password: String, // ✅ Required
+    val password: String="", // ✅ Required
 
     @SerializedName("age")
     val age: Int? = null,
@@ -27,12 +27,3 @@ data class UserModel(
     @SerializedName("status")
     val status: Boolean? = null
 )
-
-sealed class LoginUiState {
-    object Idle : LoginUiState()
-    object Loading : LoginUiState()
-    object Success : LoginUiState()
-
-    data class Error(val message: String) : LoginUiState()
-}
-

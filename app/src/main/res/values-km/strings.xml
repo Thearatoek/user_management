@@ -25,5 +25,7 @@
     <string name="light_mode" translatable="false">ភ្លឺ</string>
     <string name="english" translatable="false">ភាសាអង្លេស</string>
     <string name="khmer" translatable="false">ភាសាខ្មែរ</string>
+    <string name="light_status" translatable="false">ស្ថានភាពពន្លឺ</string>
+    <string name="go_to_setting" translatable="false">ចូលទៅការកំណត់</string>
 
 </resources>

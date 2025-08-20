@@ -19,11 +19,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.app.user_mangement.ui.screen.auth.login.LoginUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.example.user.management.sample.data.model.LoginUiState
-
-
 @Composable
 fun LoginButton(
     state: LoginUiState,
@@ -61,7 +59,6 @@ fun LoginButton(
         }
     }
 }
-
 @Composable
 fun SignUpPrompt(
     text : String,
@@ -89,7 +86,6 @@ fun SignUpPrompt(
         )
     }
 }
-
 @Composable
 fun DividerWithText(text: String) {
     Row(
@@ -107,7 +103,6 @@ fun DividerWithText(text: String) {
         Box(modifier = Modifier.weight(1f).height(1.dp).background( MaterialTheme.colorScheme.onPrimaryContainer))
     }
 }
-
 @Composable
 fun SocialLoginButton(
     iconId: Int,

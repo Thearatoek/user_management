@@ -78,27 +78,33 @@ class UserRepositoryImpl @Inject constructor(
     }
     override suspend fun signUpUserWithEmailAndPassword(userModel: UserModel): Result<String> {
         return try {
-            val result = auth.createUserWithEmailAndPassword(userModel.email, userModel.password).await()
-            Log.d("BekMa", "${result.user}")
+            val email = userModel.email ?: return Result.failure(Exception("Email is null"))
+            val password = userModel.password ?: return Result.failure(Exception("Password is null"))
+            val result = auth.createUserWithEmailAndPassword(email, password).await()
             val user = result.user
             if (user != null) {
-                val users = UserModel(
+                val newUser = UserModel(
                     id = user.uid,
                     name = userModel.name,
                     email = userModel.email,
-                    password = ""
+                    password = "" // Don't store password in Firestore
                 )
-                // Add user to "users" collection with UID as document ID
-                firebase.collection("users").document(user.uid).set(users).await()
 
-                // Save key as Local
+                // Save user to Firestore (document id = uid)
+                firebase.collection("users")
+                    .document(user.uid)
+                    .set(newUser)
+                    .await()
+
+                // Save uid locally (SharedPref / DataStore)
                 userManager.saveToken(context, user.uid)
-                Result.success(user.uid)
+
+                Result.success(user.uid) // return String (uid)
             } else {
-                Result.failure(Exception("Login failed: User is null"))
+                Result.failure(Exception("SignUp failed: user is null"))
             }
         } catch (e: Exception) {
-            Log.d("BekMa", "${e.message}")
+            Log.e("SignUp", "Error: ${e.message}", e)
             Result.failure(e)
         }
     }

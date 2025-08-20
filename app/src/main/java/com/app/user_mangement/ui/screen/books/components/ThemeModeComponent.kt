@@ -1,5 +1,6 @@
 package com.app.user_mangement.ui.screen.books.components
 
+import android.app.Activity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,13 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.app.klakmoum.R
-import com.app.user_mangement.ui.screen.user.user_list.LanguageViewModel
-import com.app.user_mangement.ui.screen.user.user_list.ThemeModeViewModel
+import com.app.user_mangement.ui.screen.dashboard.user.user_list.LanguageViewModel
+import com.app.user_mangement.ui.screen.dashboard.user.user_list.ThemeModeViewModel
 @Composable
 fun ThemeSwitcherScreen(
     languageViewModel: LanguageViewModel = hiltViewModel(),
     viewModel: ThemeModeViewModel = hiltViewModel()) {
     val context = LocalContext.current
+    val activity = context as? Activity
     val themeMode by viewModel.themeMode.collectAsState()
     val languageCode by languageViewModel.languageCode.collectAsState()
     Column(modifier = Modifier.padding(16.dp)) {
@@ -52,13 +54,12 @@ fun ThemeSwitcherScreen(
                 Icon(
                     imageVector =if (themeMode == "light") Icons.Outlined.ToggleOff else Icons.Outlined.ToggleOn,
                     contentDescription = "",
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier
                         .size(50.dp)
                         .clickable {
                             viewModel.changeThemeMode(
                                 if (themeMode == "light") "dark" else "light",
-                                context
                             )
                         }
                 )
@@ -72,7 +73,7 @@ fun ThemeSwitcherScreen(
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 )
             }
@@ -92,14 +93,10 @@ fun ThemeSwitcherScreen(
                 Icon(
                     imageVector =if (languageCode == "en") Icons.Outlined.ToggleOff else Icons.Outlined.ToggleOn,
                     contentDescription = "",
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier
                         .size(50.dp)
                         .clickable {
-                            languageViewModel.changeLanguage(
-                                if (languageViewModel.languageCode.value == "en") "km" else "en",
-                                context
-                            )
                         }
                 )
                 Text(
@@ -112,7 +109,7 @@ fun ThemeSwitcherScreen(
                     style = TextStyle(
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 )
             }
