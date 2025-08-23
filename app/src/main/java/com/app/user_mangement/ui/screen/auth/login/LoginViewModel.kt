@@ -50,7 +50,7 @@ class LoginViewModel @Inject constructor(
        }
    }
     // get user
-    fun getUserData() {
+   suspend fun getUserData() {
         viewModelScope.launch {
             _loginState.value = LoginUiState.Loading
             val result = userRepository.getUserFirebase()

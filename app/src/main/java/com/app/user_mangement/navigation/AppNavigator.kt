@@ -15,4 +15,9 @@ sealed class NavDirections(val route: String) {
 
     object  AppUserFunctionalityScreen : NavDirections("app_user_screen")
 
+    object  GoogleMapScreen : NavDirections("google_map_screen")
+
+    object  PermissionScreen : NavDirections("permission_screen")
+
+
 }

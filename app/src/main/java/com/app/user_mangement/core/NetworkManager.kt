@@ -4,8 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.NetworkInfo
 import android.net.NetworkRequest
-import android.os.Build
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @Singleton
 class NetworkMonitor @Inject constructor(
@@ -43,7 +44,6 @@ class NetworkMonitor @Inject constructor(
             _networkStatus.tryEmit(NetworkStatus.Losing)
         }
     }
-
     fun registerCallback() {
         if (isRegistered) return
         val request = NetworkRequest.Builder()

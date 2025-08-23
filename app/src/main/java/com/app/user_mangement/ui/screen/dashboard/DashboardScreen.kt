@@ -1,6 +1,12 @@
 package com.app.user_mangement.ui.screen.dashboard
 
-import android.app.Activity
+import android.Manifest
+import android.content.Intent
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,13 +35,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -56,6 +59,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat.startActivity
+import com.app.user_mangement.activity.SecondActivity
 import com.app.user_mangement.ui.screen.dashboard.user.user_list.LanguageViewModel
 import com.app.user_mangement.ui.screen.dashboard.user.user_list.ThemeModeViewModel
 import kotlinx.coroutines.launch
@@ -67,17 +73,30 @@ fun DashboardScreen(
     languageViewModel: LanguageViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val activity = context as? Activity
-    val loginState by viewModel.loginState.collectAsStateWithLifecycle()
     val user by viewModel.user.collectAsState()
     val scope = rememberCoroutineScope()
     var showSheet by remember { mutableStateOf(false) }
     val themeModeState by themeModeViewModel.themeMode.collectAsState()
     val languageState by languageViewModel.languageCode.collectAsState()
 
-    LaunchedEffect(loginState){
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        var isGranted = true
+        permissions.entries.forEach {
+            if (!it.value) {
+                isGranted = false
+                return@forEach
+            }
+        }
+        if (isGranted) {
+            navController.navigate("google_map_screen")
+        }
+    }
+    LaunchedEffect(key1 = Unit) {
         viewModel.getUserData()
     }
+
     Scaffold(
     bottomBar = {
         BottomAppBar(
@@ -139,7 +158,20 @@ fun DashboardScreen(
                             fontSize = 32.sp,
                             fontWeight = FontWeight(500)
                         ),
-                        modifier = Modifier.padding(start = 16.dp) // spacing between logo and text
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .clickable(
+                                indication = null,
+                                interactionSource = remember { MutableInteractionSource() }
+                            ) {
+                                locationPermissionLauncher.launch(
+                                    arrayOf(
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    )
+                                )
+//                                context.startActivity(Intent(context, SecondActivity::class.java))
+                            }
                     )
                     Image(
                         painter = painterResource(id = R.drawable.setting),
@@ -423,7 +455,6 @@ fun CustomBigInfoBox(
     @DrawableRes fistIcon: Int,
     @DrawableRes lastIcon: Int
 ){
-
     Box(
         modifier = Modifier
             .width(width = 236.dp)
@@ -535,7 +566,8 @@ fun ModalBottomSheetDemo(
                 DivideLine()
                 Spacer(modifier = Modifier.height(30.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween

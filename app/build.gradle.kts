@@ -59,6 +59,7 @@ android {
 
 dependencies {
     implementation(libs.room.runtime)
+    implementation(libs.play.services.fitness)
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
 
@@ -98,6 +99,13 @@ dependencies {
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
 
+    implementation(libs.google.maps)
+    implementation(libs.google.location)
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
+    implementation(libs.google.place.sdk)
+
+
     implementation(libs.barcode.scanning)
 
     implementation(libs.accompanist.permissions)
@@ -114,5 +122,4 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
     implementation(libs.otto)
-
 }

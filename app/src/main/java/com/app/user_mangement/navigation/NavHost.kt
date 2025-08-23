@@ -14,8 +14,10 @@ import com.app.user_mangement.ui.screen.auth.login.SetupScreen
 import com.app.user_mangement.ui.screen.auth.register.LoginScreen
 import com.app.user_mangement.ui.screen.books.BookScreen
 import com.app.user_mangement.ui.screen.dashboard.DashboardScreen
+import com.app.user_mangement.ui.screen.map.PermissionScreen
 import com.app.user_mangement.ui.screen.qr_scan.QRScannerScreen
 import com.app.user_mangement.ui.screen.welcome.WelcomeScreen
+import com.example.app.ui.screens.MapScreen
 import org.example.user.management.sample.ui.screen.user.user_detail.CreateUserScreen
 
 
@@ -36,6 +38,8 @@ fun AppNavGraph(
         welcomeScreen(navController)
         appUserFunctionalityScreen(navController)
         createUsername(navController)
+        googleMap(navController)
+        permissionScreen(navController)
     }
 }
 
@@ -93,5 +97,17 @@ private  fun NavGraphBuilder.appUserFunctionalityScreen(navController: NavHostCo
 private  fun NavGraphBuilder.createUsername(navController: NavHostController) {
     composable(NavDirections.UserNameScreen.route) {
         PersonalizeScreen(navController = navController)
+    }
+}
+
+private  fun NavGraphBuilder.googleMap(navController: NavHostController) {
+    composable(NavDirections.GoogleMapScreen.route) {
+        MapScreen(navController = navController)
+    }
+}
+
+private  fun NavGraphBuilder.permissionScreen(navController: NavHostController) {
+    composable(NavDirections.PermissionScreen.route) {
+        PermissionScreen(navController = navController)
     }
 }

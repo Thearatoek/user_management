@@ -27,6 +27,7 @@ import com.app.user_mangement.ui.screen.auth.login.components.CustomTextField
 import com.app.user_mangement.ui.widget.CustomButton
 import com.app.user_mangement.ui.widget.CustomSocialButton
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import org.example.user.management.sample.data.model.UserModel
 
 @Composable
 fun RegisterScreen(
@@ -62,7 +63,7 @@ fun RegisterScreen(
                 .fillMaxSize()
                 .background(
                     brush = Brush.linearGradient(
-                        colors = listOf( Color(0xff0EAD69),Color(0xff0C9359),)
+                        colors = listOf(Color(0xff0EAD69), Color(0xff0C9359),)
                     )
                 ),
         ){

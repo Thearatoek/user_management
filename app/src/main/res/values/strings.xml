@@ -1,4 +1,5 @@
 <resources>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyD70YNDKyU2tqb5P9o_3wfjSd5MxiUqZyY</string>
     <string name="app_name" translatable="false">AEPOD</string>
     <string name="cup" translatable="false">cup of tea</string>
     <string name="hello_world" translatable="false">Hello World</string>

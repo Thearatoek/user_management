@@ -22,5 +22,13 @@ fun NetworkStatusObserver(networkMonitor: NetworkMonitor) {
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }else {
+        LaunchedEffect(status) {
+            Toast.makeText(
+                context,
+                "✅ Back online",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }

@@ -1,3 +1,4 @@
+
 pluginManagement {
     repositories {
         google()
@@ -11,7 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
 
 rootProject.name = "kla kmoum"
 include(":app")
