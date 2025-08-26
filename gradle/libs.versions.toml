@@ -37,6 +37,7 @@ maps-compose = "2.13.0"
 play-services-maps = "18.1.0"
 google-place-sdk = "3.5.0"
 playServicesFitness = "21.3.0"
+firebaseMessaging = "23.0.0"
 
 [libraries]
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
@@ -97,6 +98,8 @@ maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = 
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
 google-place-sdk = { module = "com.google.android.libraries.places:places", version.ref = "google-place-sdk" }
 play-services-fitness = { group = "com.google.android.gms", name = "play-services-fitness", version.ref = "playServicesFitness" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessaging" }
+
 [libraries.firebase-auth-ktx]
 module = "com.google.firebase:firebase-auth-ktx"
 

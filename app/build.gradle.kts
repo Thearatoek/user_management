@@ -90,6 +90,9 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.navigation.compose.old)
 
+    //firebase messaging
+    implementation(libs.firebase.messaging)
+
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 

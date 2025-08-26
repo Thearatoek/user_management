@@ -70,7 +70,8 @@ fun DashboardScreen(
     navController: NavController,
     viewModel: LoginViewModel = hiltViewModel(),
     themeModeViewModel: ThemeModeViewModel = hiltViewModel(),
-    languageViewModel: LanguageViewModel = hiltViewModel()
+    languageViewModel: LanguageViewModel = hiltViewModel(),
+    dashboardViewModel: DashboardViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val user by viewModel.user.collectAsState()
@@ -182,8 +183,11 @@ fun DashboardScreen(
                                 indication = null,
                                 interactionSource = remember { MutableInteractionSource() }
                             ) {
+//                                scope.launch {
+//                                    showSheet = true
+//                                }
                                 scope.launch {
-                                    showSheet = true
+                                    dashboardViewModel.onPushNotification()
                                 }
                             }
                     )

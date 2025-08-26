@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class ApiService {
-   private val BASE_URL = "https://6894707fbe3700414e132d1f.mockapi.io/api/"
+     val BASE_URL = "https://firebase-cloud-nofitication-express-1.onrender.com"
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {

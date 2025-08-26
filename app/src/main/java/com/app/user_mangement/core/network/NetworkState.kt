@@ -1,4 +1,4 @@
-package com.app.user_mangement.core
+package com.app.user_mangement.core.network
 
 enum class NetworkStatus {
     Available,

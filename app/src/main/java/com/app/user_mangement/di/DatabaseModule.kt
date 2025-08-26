@@ -20,8 +20,6 @@ object DataBaseModule {
     ): UserManagerStore {
         return UserManagerStore
     }
-
-
     @Provides
     @Singleton
     fun provideSettingsManager(

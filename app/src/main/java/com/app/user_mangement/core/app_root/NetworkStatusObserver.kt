@@ -6,8 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
-import com.app.user_mangement.core.NetworkMonitor
-import com.app.user_mangement.core.NetworkStatus
+import com.app.user_mangement.core.network.NetworkMonitor
+import com.app.user_mangement.core.network.NetworkStatus
 
 @Composable
 fun NetworkStatusObserver(networkMonitor: NetworkMonitor) {
